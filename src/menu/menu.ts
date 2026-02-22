@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2026 Katsute <https://github.com/Katsute>
+ * Modified work Copyright (C) 2026 Jagrit Gumber
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +34,7 @@ import { show as opacityMenu } from "./opacity";
 import { show as repeatMenu } from "./repeat";
 import { show as sizeMenu } from "./size";
 import { show as timeMenu } from "./time";
+import { wallhavenMenu } from "./wallhaven";
 
 const issueUrl: string = `https://github.com/KatsuteDev/Background/issues/new?template=bug.yml&os=${encodeURIComponent(`${platform()} ${release()}`)}&vs=${encodeURIComponent(version)}&version=${encodeURIComponent(pkg.version)}`;
 const featureUrl: string = "https://github.com/KatsuteDev/Background/issues/new?template=feature.yml";
@@ -127,6 +129,12 @@ const moreMenu: (selected?: number) => void = (selected?: number) => {
             description: descriptionBool("API"),
             detail: "Enable/disable API access",
             handle: handleBool("API", i++)
+        }),
+        quickPickItem({
+            label: "Wallhaven",
+            description: `[${get("wallhaven.enabled") ? "enabled" : "disabled"}]`,
+            detail: "Daily Wallhaven sync and favorites catalog",
+            handle: () => wallhavenMenu()
         }),
         separator(),
         quickPickItem({
