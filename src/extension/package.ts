@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2026 Katsute <https://github.com/Katsute>
- * Modified work Copyright (C) 2026 Jagrit Gumber
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,19 +38,7 @@ export type ConfigurationKey =
     "settingScope" |
     "smoothImageRendering" |
     "CSS" |
-    "API" |
-    "wallhaven.enabled" |
-    "wallhaven.refreshTimeLocal" |
-    "wallhaven.query" |
-    "wallhaven.mode" |
-    "wallhaven.mapping" |
-    "wallhaven.fetchPerDay" |
-    "wallhaven.cacheMax" |
-    "wallhaven.purity" |
-    "wallhaven.atleast" |
-    "wallhaven.ratios" |
-    "wallhaven.sorting" |
-    "wallhaven.apiKey";
+    "API";
 
 export type Contributes = {
     commands: [{

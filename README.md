@@ -75,7 +75,6 @@ Add background images by file, folder, or URL. Supports [glob](https://github.co
 |<kbd>Background: Uninstall</kbd>|Uninstalls and disables the background|
 |<kbd>Background: Reload</kbd>|Randomizes the current background|
 |<kbd>Background: Configuration</kbd>|Opens the configuration menu|
-|<kbd>Background: Wallhaven: Configure</kbd>|Opens Wallhaven sync and favorites options|
 |<kbd>Background: Changelog</kbd>|Opens the changelog|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
@@ -110,18 +109,6 @@ Use the <kbd>Background: Configuration</kbd> command or press the **Background**
 |Setting Scope|Where to save background settings - Global or Workspace|
 |CSS|Custom CSS|
 |API|Toggles API access|
-|Wallhaven Enabled|Enable daily Wallhaven sync (opt-in)|
-|Wallhaven Refresh Time|Daily local fetch time in `HH:mm`|
-|Wallhaven Query|Search query used for fetch|
-|Wallhaven Mode|`daily` or `favorites` rotation|
-|Wallhaven Mapping|`shared` pool or `perSurface` pools|
-|Wallhaven Fetch Per Day|Max new images per daily sync|
-|Wallhaven Cache Max|Max locally cached Wallhaven feed entries|
-|Wallhaven Purity|Purity filter (`100`, `110`, `111`)|
-|Wallhaven Atleast|Minimum resolution in `WIDTHxHEIGHT` format|
-|Wallhaven Ratios|Allowed aspect ratios for search|
-|Wallhaven Sorting|Search sorting strategy|
-|Wallhaven API Key|Optional API key (falls back to `WALLHAVEN_API_KEY`)|
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
@@ -197,6 +184,3 @@ const background = vscode.extensions.getExtension("katsute.code-background").exp
 ## &nbsp;
 
 This extension is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Background/blob/main/LICENSE).
-
-Original project copyright remains with Katsute.
-Fork modifications and newly added files in this repository include Copyright (C) 2026 Jagrit Gumber.

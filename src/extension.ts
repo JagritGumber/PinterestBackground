@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2026 Katsute <https://github.com/Katsute>
- * Modified work Copyright (C) 2026 Jagrit Gumber
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,8 +29,6 @@ import { api } from "./extension/api";
 import { install, uninstall } from "./extension/writer";
 import { optionMenu } from "./menu/menu";
 import { configuration, get, update } from "./extension/config";
-import { initializeWallhaven, likeCurrent, likeCurrentAndNext, openFavoritesPicker, setMode, syncNow } from "./extension/wallhaven";
-import { wallhavenMenu } from "./menu/wallhaven";
 import { env } from "vscode";
 import { setUserDir } from "./extension/env";
 
@@ -138,12 +135,6 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
         commands.registerCommand("background.help", () => commands.executeCommand("markdown.showPreview", help)),
         commands.registerCommand("background.changelog", () => commands.executeCommand("markdown.showPreview", changelog)),
         commands.registerCommand("background.config", optionMenu),
-        commands.registerCommand("background.wallhaven.syncNow", () => syncNow(true)),
-        commands.registerCommand("background.wallhaven.likeCurrent", () => likeCurrent()),
-        commands.registerCommand("background.wallhaven.likeCurrentAndNext", () => likeCurrentAndNext()),
-        commands.registerCommand("background.wallhaven.unlike", openFavoritesPicker),
-        commands.registerCommand("background.wallhaven.mode.toggle", () => setMode(get("wallhaven.mode") === "favorites" ? "daily" : "favorites")),
-        commands.registerCommand("background.wallhaven.configure", wallhavenMenu),
         statusbar
     );
 
@@ -169,8 +160,6 @@ export const activate: (context: ExtensionContext) => any = (context: ExtensionC
 
     if(configuration().get("autoInstall"))
         install(workbench, product, false);
-
-    initializeWallhaven(context);
 
     // delay before VSCode will actually refresh properly
     for(let i = installDelay; i > forcedDelay; i -= 1000)

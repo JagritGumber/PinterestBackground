@@ -62,36 +62,6 @@
                 "command": "background.help",
                 "title": "Help",
                 "category": "Background"
-            },
-            {
-                "command": "background.wallhaven.syncNow",
-                "title": "Wallhaven: Sync Now",
-                "category": "Background"
-            },
-            {
-                "command": "background.wallhaven.likeCurrent",
-                "title": "Wallhaven: Like Current",
-                "category": "Background"
-            },
-            {
-                "command": "background.wallhaven.likeCurrentAndNext",
-                "title": "Wallhaven: Like Current and Next",
-                "category": "Background"
-            },
-            {
-                "command": "background.wallhaven.unlike",
-                "title": "Wallhaven: Remove Favorite",
-                "category": "Background"
-            },
-            {
-                "command": "background.wallhaven.mode.toggle",
-                "title": "Wallhaven: Toggle Mode",
-                "category": "Background"
-            },
-            {
-                "command": "background.wallhaven.configure",
-                "title": "Wallhaven: Configure",
-                "category": "Background"
             }
         ],
         "configuration": {
@@ -360,111 +330,6 @@
                     "order": 19,
                     "type": "boolean",
                     "default": false
-                },
-                "background.wallhaven.enabled": {
-                    "markdownDescription": "Enable Wallhaven daily sync.",
-                    "order": 20,
-                    "type": "boolean",
-                    "default": false
-                },
-                "background.wallhaven.refreshTimeLocal": {
-                    "markdownDescription": "Daily sync time in local timezone (HH:mm).",
-                    "order": 21,
-                    "type": "string",
-                    "default": "09:00",
-                    "pattern": "^([01]?\\d|2[0-3]):([0-5]\\d)$"
-                },
-                "background.wallhaven.query": {
-                    "markdownDescription": "Wallhaven search query used for daily fetch.",
-                    "order": 22,
-                    "type": "string",
-                    "default": "anime 1girl wallpaper"
-                },
-                "background.wallhaven.mode": {
-                    "markdownDescription": "Which Wallhaven catalog to rotate.",
-                    "order": 23,
-                    "type": "string",
-                    "enum": [
-                        "daily",
-                        "favorites"
-                    ],
-                    "default": "daily"
-                },
-                "background.wallhaven.mapping": {
-                    "markdownDescription": "How Wallhaven images map to window/editor/sidebar/panel.",
-                    "order": 24,
-                    "type": "string",
-                    "enum": [
-                        "shared",
-                        "perSurface"
-                    ]
-                },
-                "background.wallhaven.fetchPerDay": {
-                    "markdownDescription": "Maximum new Wallhaven images fetched in one daily run.",
-                    "order": 25,
-                    "type": "number",
-                    "minimum": 1,
-                    "maximum": 100,
-                    "default": 20
-                },
-                "background.wallhaven.cacheMax": {
-                    "markdownDescription": "Maximum cached Wallhaven feed entries stored locally.",
-                    "order": 26,
-                    "type": "number",
-                    "minimum": 20,
-                    "maximum": 1000,
-                    "default": 200
-                },
-                "background.wallhaven.purity": {
-                    "markdownDescription": "Wallhaven purity filter.",
-                    "order": 27,
-                    "type": "string",
-                    "enum": [
-                        "100",
-                        "110",
-                        "111"
-                    ],
-                    "default": "100"
-                },
-                "background.wallhaven.atleast": {
-                    "markdownDescription": "Minimum resolution in WIDTHxHEIGHT format.",
-                    "order": 28,
-                    "type": "string",
-                    "default": "1920x1080",
-                    "pattern": "^\\d+x\\d+$"
-                },
-                "background.wallhaven.ratios": {
-                    "markdownDescription": "Allowed aspect ratios for Wallhaven search.",
-                    "order": 29,
-                    "type": "array",
-                    "default": [
-                        "16x9",
-                        "16x10",
-                        "21x9"
-                    ],
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "background.wallhaven.sorting": {
-                    "markdownDescription": "Wallhaven sorting mode.",
-                    "order": 30,
-                    "type": "string",
-                    "enum": [
-                        "random",
-                        "toplist",
-                        "favorites",
-                        "views",
-                        "date_added",
-                        "relevance"
-                    ],
-                    "default": "random"
-                },
-                "background.wallhaven.apiKey": {
-                    "markdownDescription": "Optional Wallhaven API key. If omitted, WALLHAVEN_API_KEY environment variable is used when available.",
-                    "order": 31,
-                    "type": "string",
-                    "default": ""
                 }
             }
         }
@@ -472,7 +337,7 @@
     "main": "dist/index.js",
     "scripts": {
         "// -- dev -- //": "",
-        "clean": "rimraf --glob dist && rimraf --glob \"code-background-*.vsix\"",
+        "clean": "rimraf --glob dist & rimraf --glob code-background-*.vsix",
         "prune": "npm prune && npm i --package-lock --ignore-scripts",
         "update": "npm update -D && npm i --package-lock --ignore-scripts && npm run prune",
         "// -- build -- //": "",
@@ -489,9 +354,6 @@
         "url": "git+https://github.com/KatsuteDev/Background.git"
     },
     "author": "Katsute",
-    "contributors": [
-        "Jagrit Gumber"
-    ],
     "license": "GPL-2.0-only",
     "bugs": {
         "url": "https://github.com/KatsuteDev/Background/issues"

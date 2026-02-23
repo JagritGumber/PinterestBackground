@@ -18,15 +18,6 @@ Backgrounds are not removed on extension disable or uninstall, you must run the 
 
 These buttons are controlled by the system and not VSCode; and can not be modified by this extension.
 
-#### Wallhaven sync is enabled but no new backgrounds appear
-
-Wallhaven sync is opt-in and uses anonymous search by default.
-
-1. Enable `background.wallhaven.enabled`.
-2. Set `background.wallhaven.query` (for example: `anime 1girl wallpaper`).
-3. Run <kbd>Background: Wallhaven: Sync Now</kbd>.
-4. If results are sparse, relax `background.wallhaven.ratios`, set broader `background.wallhaven.purity`, or add `background.wallhaven.apiKey`.
-
 ## &nbsp;
 
 #### (Windows) Doesn't work on WSL

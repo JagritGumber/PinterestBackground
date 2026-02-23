@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2026 Katsute <https://github.com/Katsute>
- * Modified work Copyright (C) 2026 Jagrit Gumber
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +20,6 @@ import { commands } from "vscode";
 import { add, get, remove, replace } from "../menu/file";
 import { get as cget } from "./config";
 import { reload } from "../lib/vscode";
-import { getFavorites, likeCurrent, likeCurrentAndNext, setMode, syncNow } from "./wallhaven";
 
 export const api = {
     install: () => cget("API") && commands.executeCommand("background.install"),
@@ -85,50 +83,5 @@ export const api = {
             }
         else
             return false;
-    },
-    syncNow: async () => cget("API") ? syncNow(false) : false,
-    like: async (ui?: string) => {
-        if(!cget("API")){
-            return false;
-        }
-        if(!ui){
-            return likeCurrent();
-        }
-        switch(ui){
-            case "window":
-            case "editor":
-            case "sidebar":
-            case "panel":
-                return likeCurrent(ui);
-            default:
-                return false;
-        }
-    },
-    likeAndNext: async (ui?: string) => {
-        if(!cget("API")){
-            return false;
-        }
-        if(!ui){
-            return likeCurrentAndNext();
-        }
-        switch(ui){
-            case "window":
-            case "editor":
-            case "sidebar":
-            case "panel":
-                return likeCurrentAndNext(ui);
-            default:
-                return false;
-        }
-    },
-    setMode: async (mode: string) => {
-        if(!cget("API")){
-            return false;
-        }
-        if(mode !== "daily" && mode !== "favorites"){
-            return false;
-        }
-        return setMode(mode);
-    },
-    getFavorites: () => cget("API") ? getFavorites() : []
+    }
 }
