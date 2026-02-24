@@ -62,8 +62,148 @@
                 "command": "background.help",
                 "title": "Help",
                 "category": "Background"
+            },
+            {
+                "command": "background.search.refresh",
+                "title": "Refresh Search",
+                "category": "Background"
+            },
+            {
+                "command": "background.search.prevPage",
+                "title": "Previous Search Page",
+                "category": "Background"
+            },
+            {
+                "command": "background.search.nextPage",
+                "title": "Next Search Page",
+                "category": "Background"
+            },
+            {
+                "command": "background.search.setQuery",
+                "title": "Set Search Query",
+                "category": "Background"
+            },
+            {
+                "command": "background.search.setSort",
+                "title": "Set Search Sort",
+                "category": "Background"
+            },
+            {
+                "command": "background.search.apply",
+                "title": "Apply Search Wallpaper",
+                "category": "Background"
+            },
+            {
+                "command": "background.search.addToCollection",
+                "title": "Add Search Wallpaper to Collection",
+                "category": "Background"
+            },
+            {
+                "command": "background.collections.create",
+                "title": "Create Collection",
+                "category": "Background"
+            },
+            {
+                "command": "background.collections.rename",
+                "title": "Rename Collection",
+                "category": "Background"
+            },
+            {
+                "command": "background.collections.delete",
+                "title": "Delete Collection",
+                "category": "Background"
+            },
+            {
+                "command": "background.collections.addWallpaper",
+                "title": "Add Wallpaper URL to Collection",
+                "category": "Background"
+            },
+            {
+                "command": "background.collections.removeWallpaper",
+                "title": "Remove Wallpaper from Collection",
+                "category": "Background"
+            },
+            {
+                "command": "background.collections.applyNow",
+                "title": "Apply Collection Wallpaper",
+                "category": "Background"
+            },
+            {
+                "command": "background.collections.enableDailyRotation",
+                "title": "Enable Daily Rotation",
+                "category": "Background"
+            },
+            {
+                "command": "background.rotation.deferUntilStartup",
+                "title": "Defer Rotation Until Startup",
+                "category": "Background"
             }
         ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "background",
+                    "title": "Background",
+                    "icon": "assets/icon-sm.png"
+                }
+            ]
+        },
+        "views": {
+            "background": [
+                {
+                    "id": "background.searchView",
+                    "name": "Search"
+                },
+                {
+                    "id": "background.collectionsView",
+                    "name": "Collections"
+                }
+            ]
+        },
+        "menus": {
+            "view/item/context": [
+                {
+                    "command": "background.search.apply",
+                    "when": "view == background.searchView && viewItem == search.result",
+                    "group": "inline"
+                },
+                {
+                    "command": "background.search.addToCollection",
+                    "when": "view == background.searchView && viewItem == search.result",
+                    "group": "navigation"
+                },
+                {
+                    "command": "background.collections.enableDailyRotation",
+                    "when": "view == background.collectionsView && viewItem == collection.item",
+                    "group": "inline"
+                },
+                {
+                    "command": "background.collections.rename",
+                    "when": "view == background.collectionsView && viewItem == collection.item",
+                    "group": "navigation"
+                },
+                {
+                    "command": "background.collections.delete",
+                    "when": "view == background.collectionsView && viewItem == collection.item",
+                    "group": "navigation"
+                },
+                {
+                    "command": "background.collections.addWallpaper",
+                    "when": "view == background.collectionsView && viewItem == collection.item",
+                    "group": "navigation"
+                },
+                {
+                    "command": "background.collections.applyNow",
+                    "when": "view == background.collectionsView && viewItem == collection.wallpaper",
+                    "group": "inline"
+                },
+                {
+                    "command": "background.collections.removeWallpaper",
+                    "when": "view == background.collectionsView && viewItem == collection.wallpaper",
+                    "group": "navigation"
+                }
+            ]
+        },
         "configuration": {
             "title": "Background",
             "order": 0,
@@ -330,6 +470,32 @@
                     "order": 19,
                     "type": "boolean",
                     "default": false
+                },
+                "background.wallhaven.query": {
+                    "markdownDescription": "Current Wallhaven search query used by the Search view.",
+                    "order": 20,
+                    "type": "string",
+                    "default": ""
+                },
+                "background.wallhaven.sort": {
+                    "markdownDescription": "Current Wallhaven sorting mode used by the Search view.",
+                    "order": 21,
+                    "type": "string",
+                    "enum": [
+                        "date_added",
+                        "relevance",
+                        "views",
+                        "favorites",
+                        "toplist"
+                    ],
+                    "default": "date_added"
+                },
+                "background.wallhaven.page": {
+                    "markdownDescription": "Current Wallhaven page used by the Search view.",
+                    "order": 22,
+                    "type": "number",
+                    "minimum": 1,
+                    "default": 1
                 }
             }
         }
