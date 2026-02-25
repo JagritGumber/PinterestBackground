@@ -1,4 +1,14 @@
-import { Event, EventEmitter, TreeDataProvider, TreeItem, TreeItemCollapsibleState, workspace } from "vscode";
+import {
+    Event,
+    EventEmitter,
+    MarkdownString,
+    ThemeIcon,
+    TreeDataProvider,
+    TreeItem,
+    TreeItemCollapsibleState,
+    Uri,
+    workspace
+} from "vscode";
 
 import { WallhavenSort, WallhavenWallpaper, searchWallhaven } from "../wallhaven/client";
 
@@ -11,9 +21,25 @@ export class SearchResultItem extends TreeItem {
     public readonly contextValue = "search.result";
 
     public constructor(public readonly wallpaper: WallhavenWallpaper){
-        super(`#${wallpaper.id}  ${wallpaper.resolution}`, TreeItemCollapsibleState.None);
-        this.description = `Favorites: ${wallpaper.favorites}`;
-        this.tooltip = wallpaper.full;
+        super(`#${wallpaper.id}`, TreeItemCollapsibleState.None);
+        this.description = `${wallpaper.resolution}  •  ${wallpaper.favorites} favorites`;
+
+        const tooltip = new MarkdownString(
+            `### #${wallpaper.id}\n` +
+            `![preview](${wallpaper.preview}|height=220)\n\n` +
+            `- Resolution: \`${wallpaper.resolution}\`\n` +
+            `- Favorites: \`${wallpaper.favorites}\``
+        );
+        tooltip.isTrusted = false;
+        tooltip.supportThemeIcons = true;
+        this.tooltip = tooltip;
+
+        try{
+            this.iconPath = Uri.parse(wallpaper.preview);
+        }catch{
+            this.iconPath = new ThemeIcon("image");
+        }
+
         this.command = {
             command: "background.search.apply",
             title: "Apply Wallpaper",
@@ -24,10 +50,11 @@ export class SearchResultItem extends TreeItem {
 
 class ActionItem extends TreeItem {
 
-    public constructor(label: string, command: string, tooltip?: string){
+    public constructor(label: string, command: string, tooltip?: string, icon?: ThemeIcon){
         super(label, TreeItemCollapsibleState.None);
         this.command = { command, title: label };
         this.tooltip = tooltip;
+        this.iconPath = icon;
     }
 }
 
@@ -119,12 +146,12 @@ export class SearchTreeProvider implements TreeDataProvider<TreeItem> {
         }
 
         const items: TreeItem[] = [
-            new ActionItem(`Query: ${this.query || "(all)"}`, "background.search.setQuery", "Set Wallhaven search query"),
-            new ActionItem(`Sort: ${this.sort}`, "background.search.setSort", "Set Wallhaven sort order"),
+            new ActionItem(`Query: ${this.query || "(all)"}`, "background.search.setQuery", "Set Wallhaven search query", new ThemeIcon("search")),
+            new ActionItem(`Sort: ${this.sort}`, "background.search.setSort", "Set Wallhaven sort order", new ThemeIcon("list-unordered")),
             new InfoItem(`Page ${this.page} of ${this.state.lastPage}`),
-            new ActionItem("Previous Page", "background.search.prevPage"),
-            new ActionItem("Next Page", "background.search.nextPage"),
-            new ActionItem("Refresh", "background.search.refresh")
+            new ActionItem("Previous Page", "background.search.prevPage", undefined, new ThemeIcon("chevron-left")),
+            new ActionItem("Next Page", "background.search.nextPage", undefined, new ThemeIcon("chevron-right")),
+            new ActionItem("Refresh", "background.search.refresh", undefined, new ThemeIcon("refresh"))
         ];
 
         if(this.state.loading){

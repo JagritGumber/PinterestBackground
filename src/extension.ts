@@ -10,10 +10,12 @@ import {
     StatusBarAlignment,
     StatusBarItem,
     Uri,
-    window
+    window,
+    workspace
 } from "vscode";
 
 import { copyCommand } from "./lib/file";
+import { logInfo, showLogs } from "./lib/log";
 import { reload } from "./lib/vscode";
 
 import { install, uninstall } from "./extension/writer";
@@ -66,9 +68,7 @@ const pickCollection = async (collections: WallpaperCollection[]): Promise<Wallp
 };
 
 export const activate = async (context: ExtensionContext): Promise<any> => {
-    let workbench = "";
-    let product = "";
-
+    logInfo("extension", "activate started");
     const dir = env.appRoot;
 
     setUserDir(join(context.globalStorageUri.fsPath, "../../../User"));
@@ -78,8 +78,8 @@ export const activate = async (context: ExtensionContext): Promise<any> => {
         return {};
     }
 
-    workbench = join(dir, "out", "vs", "workbench", "workbench.desktop.main.js");
-    product = join(dir, "product.json");
+    const workbench = join(dir, "out", "vs", "workbench", "workbench.desktop.main.js");
+    const product = join(dir, "product.json");
 
     if(!existsSync(workbench)){
         window.showErrorMessage(`Failed to find '${workbench}', please report this issue`);
@@ -148,10 +148,11 @@ export const activate = async (context: ExtensionContext): Promise<any> => {
     const changelog = Uri.file(join(context.extensionPath, "CHANGELOG.md"));
     const help = Uri.file(join(context.extensionPath, "HELP.md"));
 
-    const registrations = [
+    context.subscriptions.push(
         commands.registerCommand("background.install", () => install(workbench, product, true)),
         commands.registerCommand("background.uninstall", () => uninstall(workbench, product, true)),
         commands.registerCommand("background.reload", reload),
+        commands.registerCommand("background.logs", showLogs),
         commands.registerCommand("background.config", () => commands.executeCommand("workbench.view.extension.background")),
         commands.registerCommand("background.help", () => commands.executeCommand("markdown.showPreview", help)),
         commands.registerCommand("background.changelog", () => commands.executeCommand("markdown.showPreview", changelog)),
@@ -163,7 +164,9 @@ export const activate = async (context: ExtensionContext): Promise<any> => {
         commands.registerCommand("background.search.setQuery", async () => {
             const input = await window.showInputBox({
                 prompt: "Wallhaven search query",
-                placeHolder: "e.g. nature, city night, minimal"
+                placeHolder: "e.g. nature, city night, minimal",
+                value: workspace.getConfiguration("background").get<string>("wallhaven.query") ?? "",
+                ignoreFocusOut: true
             } as InputBoxOptions);
 
             if(input !== undefined){
@@ -354,19 +357,15 @@ export const activate = async (context: ExtensionContext): Promise<any> => {
 
         window.registerTreeDataProvider("background.searchView", searchProvider),
         window.registerTreeDataProvider("background.collectionsView", collectionsProvider),
+        scheduler,
         statusbar
-    ];
-
-    for(const registration of registrations){
-        context.subscriptions.push(registration);
-    }
-
-    context.subscriptions.push(scheduler);
+    );
 
     statusbar.show();
 
     await scheduler.initialize();
     await searchProvider.refresh();
+    logInfo("extension", "activate completed");
 
     for(let i = installDelay; i > forcedDelay; i -= 1000){
         setTimeout(() => installDelay -= 1000, i);

@@ -49,6 +49,11 @@
                 "category": "Background"
             },
             {
+                "command": "background.logs",
+                "title": "Open Logs",
+                "category": "Background"
+            },
+            {
                 "command": "background.config",
                 "title": "Configuration",
                 "category": "Background"
@@ -161,6 +166,33 @@
             ]
         },
         "menus": {
+            "view/title": [
+                {
+                    "command": "background.search.setQuery",
+                    "when": "view == background.searchView",
+                    "group": "navigation@1"
+                },
+                {
+                    "command": "background.search.setSort",
+                    "when": "view == background.searchView",
+                    "group": "navigation@2"
+                },
+                {
+                    "command": "background.search.prevPage",
+                    "when": "view == background.searchView",
+                    "group": "navigation@3"
+                },
+                {
+                    "command": "background.search.nextPage",
+                    "when": "view == background.searchView",
+                    "group": "navigation@4"
+                },
+                {
+                    "command": "background.search.refresh",
+                    "when": "view == background.searchView",
+                    "group": "navigation@5"
+                }
+            ],
             "view/item/context": [
                 {
                     "command": "background.search.apply",
